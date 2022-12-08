@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        \App\Providers\AchievementProvider::class,
+        \App\Achievement\Provider\AchievementProvider::class,
 
     ],
 

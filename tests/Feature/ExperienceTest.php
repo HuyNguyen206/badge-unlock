@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Events\UserEarnExperience;
+use App\Achievement\Events\Events\UserEarnExperience;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
