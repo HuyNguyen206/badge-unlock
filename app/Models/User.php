@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Achievement\Achievements;
-use App\Achievement\Events\UserEarnExperience;
+use App\Achievement\Events\CalculateUserExperience;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,7 +53,13 @@ class User extends Authenticatable
     public function awardExperience(int $point)
     {
         $this->increment('point', $point);
-        event(new UserEarnExperience($this, $point));
+        event(new CalculateUserExperience($this, $point));
+    }
+
+    public function stripExperience(int $point)
+    {
+        $this->decrement('point', $point);
+        event(new CalculateUserExperience($this, $point));
     }
 
     public function lessons()

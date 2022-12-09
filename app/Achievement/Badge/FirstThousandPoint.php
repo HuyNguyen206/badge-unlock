@@ -6,10 +6,8 @@ use App\Models\User;
 
 class FirstThousandPoint extends Achievement
 {
-    public $name = 'First thousand points';
-    public $desc = 'Greate job! You are on right way';
+    public $desc = 'Greate job! You are on right way update';
     public $icon = 'first-thousand.svg';
-    public $id;
 
     public function qualify(User $user)
     {

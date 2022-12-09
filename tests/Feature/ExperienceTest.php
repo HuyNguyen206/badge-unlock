@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Achievement\Events\CalculateUserExperience;
 use App\Achievement\Events\Events\UserEarnExperience;
 use App\Models\Lesson;
 use App\Models\User;
@@ -34,7 +35,7 @@ class ExperienceTest extends TestCase
         $lesson = Lesson::factory()->create();
         $user->completeLesson($lesson);
 
-        Event::assertDispatched(UserEarnExperience::class, function ($event) use($user, $lesson) {
+        Event::assertDispatched(CalculateUserExperience::class, function ($event) use($user, $lesson) {
             return $event->user->is($user) && $event->earnPoint === $lesson->point;
         });
     }

@@ -3,7 +3,7 @@
 namespace App\Achievement\Listeners;
 
 use App\Achievement\Achievements;
-use App\Achievement\Events\UserEarnExperience;
+use App\Achievement\Events\CalculateUserExperience;
 
 class CheckAchivementBadge
 {
@@ -20,10 +20,10 @@ class CheckAchivementBadge
     /**
      * Handle the event.
      *
-     * @param  UserEarnExperience  $event
+     * @param  CalculateUserExperience  $event
      * @return void
      */
-    public function handle(UserEarnExperience $event)
+    public function handle(CalculateUserExperience $event)
     {
          $achievementsToAwardUser = resolve('achievements')
              ->filter->qualify($event->user)

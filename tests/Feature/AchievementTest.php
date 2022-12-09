@@ -49,8 +49,8 @@ class AchievementTest extends TestCase
 
         self::assertCount(1, $user->achievements);
 
-        $user->awardExperience(9000);
+        $user->awardExperience(2000);
 
-        self::assertCount(2, $user->fresh()->achievements);
+        self::assertCount(3, $user->fresh()->achievements);
     }
 }

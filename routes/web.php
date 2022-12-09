@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('achievement', [\App\Http\Controllers\AchievementController::class, 'achievement']);

@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Achievement\Badge;
+
+use App\Models\User;
+
+class {{CLASS}} extends Achievement
+{
+    public $desc = '';
+
+    public function qualify(User $user)
+    {
+
+    }
+}

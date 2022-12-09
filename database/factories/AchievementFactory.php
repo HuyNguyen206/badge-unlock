@@ -20,7 +20,8 @@ class AchievementFactory extends Factory
         return [
             'name' => $this->faker->word,
             'desc' => $this->faker->words(4, true),
-            'icon_path' => 'foo.svg'
+            'icon_path' => 'foo.svg',
+            'class_name' => $this->faker->unique()->words(2, true)
         ];
     }
 }
