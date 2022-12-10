@@ -16,4 +16,13 @@ class Achievements extends Collection
     {
         return $this->diff($user->achievements);
     }
+
+    public function sortbyLevel($asc = null)
+    {
+        $asc ??= true;
+
+        return $this->sortBy(function ($achievement){
+           return $achievement->levelAsNumber();
+        }, descending: !$asc)->values();
+    }
 }

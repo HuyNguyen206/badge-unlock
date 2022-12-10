@@ -24,4 +24,9 @@ class Achievement extends Model
     {
         $this->users()->attach($user);
     }
+
+    public function levelAsNumber()
+    {
+        return ['beginner' => 1, 'intermediate' => 2, 'advanced' => 3][$this->level];
+    }
 }

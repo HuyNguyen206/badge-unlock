@@ -8,6 +8,7 @@ class FirstThousandPoint extends Achievement
 {
     public $desc = 'Greate job! You are on right way update';
     public $icon = 'first-thousand.svg';
+    public $level = 'beginner';
 
     public function qualify(User $user)
     {

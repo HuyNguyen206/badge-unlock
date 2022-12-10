@@ -16,6 +16,18 @@ class AchievementTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_can_sort_achievements_according_to_a_skill_level()
+    {
+        AchievementModel::factory()->create(['level' => 'advanced']);
+        AchievementModel::factory()->create(['level' => 'intermediate']);
+        AchievementModel::factory()->create(['level' => 'beginner']);
+        $achievements = AchievementModel::all()->sortbyLevel();
+        assertEquals($achievements->pluck('level')->toArray(), ['beginner', 'intermediate', 'advanced']);
+
+        $achievements = AchievementModel::all()->sortbyLevel(asc: false);
+        assertEquals($achievements->pluck('level')->toArray(), ['advanced', 'intermediate', 'beginner']);
+    }
+
     public function test_it_can_persist_achievement_class_attribute_in_database()
     {
         $achievement = new FirstThousandPoint();
