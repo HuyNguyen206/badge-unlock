@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Achievement\CustomCollection\Achievements;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Achievement extends Model
 {
     use HasFactory;
+
+    public function newCollection(array $models = [])
+    {
+        return new Achievements($models);
+    }
 
     public function users()
     {
@@ -16,10 +22,6 @@ class Achievement extends Model
 
     public function awardTo(User $user)
     {
-//        DB::listen(function ($sql) use($user) {
-//
-//            var_dump($sql);
-//        });
         $this->users()->attach($user);
     }
 }

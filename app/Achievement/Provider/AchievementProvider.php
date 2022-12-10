@@ -57,11 +57,12 @@ class AchievementProvider extends ServiceProvider
                 'class_name' => class_basename($achievement),
                 'name' => $achievement->name,
                 'desc' => $achievement->desc,
-                'icon_path' => $achievement->icon
+                'icon_path' => $achievement->icon,
+                'level' => $achievement->level
             ];
         })->toArray();
 
-       Achievement::query()->upsert($upsertData, ['class_name'], ['name', 'desc', 'icon_path']);
+       Achievement::query()->upsert($upsertData, ['class_name'], ['name', 'desc', 'icon_path', 'level']);
         $data = Achievement::all(['id', 'class_name']);
         return $achievements->map(function ($achievement) use ($data){
            $achievement->id = $this->getId($data, $achievement);

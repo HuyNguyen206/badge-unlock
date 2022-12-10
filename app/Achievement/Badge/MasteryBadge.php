@@ -10,6 +10,8 @@ class MasteryBadge extends  Achievement
     public $desc = 'Greate job! You are master now';
     public $icon = 'first-ten-thousand.svg';
 
+    public $level = 'advanced';
+
     public function qualify(User $user)
     {
         return $user->point >= 10000;

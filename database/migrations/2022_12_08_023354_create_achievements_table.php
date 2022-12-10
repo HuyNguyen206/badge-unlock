@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('desc');
             $table->string('icon_path');
+            $table->enum('level', ['beginner', 'intermediate', 'advanced'])->default('intermediate');
             $table->timestamps();
         });
     }

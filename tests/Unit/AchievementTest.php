@@ -3,15 +3,32 @@
 namespace Tests\Unit;
 
 use App\Achievement\Badge\Achievement;
+use App\Achievement\Badge\FirstThousandPoint;
+use App\Achievement\CustomCollection\Achievements;
 use App\Models\Achievement as AchievementModel;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
 
 class AchievementTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_it_can_persist_achievement_class_attribute_in_database()
+    {
+        $achievement = new FirstThousandPoint();
+        resolve('achievements');
+
+        $this->assertDatabaseHas('achievements', [
+            'name' => $achievement->name,
+            'desc' => $achievement->desc,
+            'icon_path' => $achievement->icon,
+            'class_name' => 'FirstThousandPoint',
+            'level' => $achievement->level
+        ]);
+    }
 
     /**
      * A basic feature test example.
@@ -65,6 +82,40 @@ class AchievementTest extends TestCase
         $achievement = new FakeAchievementName();
         assertEquals($achievement->icon, 'fake-icon.svg');
     }
+
+    public function test_set_a_default_skill_level()
+    {
+        $achievement = new FakeAchievement();
+        assertEquals($achievement->level, 'intermediate');
+    }
+
+    public function test_can_set_skill_level()
+    {
+        $achievement = new FakeAchievementName();
+        assertEquals($achievement->level, 'advanced');
+    }
+
+    public function test_it_return_a_custom_achievements_collection()
+    {
+        self::assertInstanceOf(Achievements::class, AchievementModel::all());
+    }
+
+    public function test_it_can_filter_achievements_for_given_user()
+    {
+        $user = User::factory()->create();
+        assertCount(0, \App\Models\Achievement::all()->for($user));
+        $user->awardExperience(1000);
+        assertCount(1, \App\Models\Achievement::all()->for($user->fresh()));
+        $user->awardExperience(1000);
+        assertCount(2, \App\Models\Achievement::all()->for($user->fresh()));
+    }
+
+    public function test_it_can_filter_remaining_achievements_for_given_user()
+    {
+        $user = User::factory()->create();
+        $user->awardExperience(2000);
+        assertCount(4, \App\Models\Achievement::all()->remainingFor($user));
+    }
 }
 
 class FakeAchievement extends Achievement
@@ -84,6 +135,7 @@ class FakeAchievementName extends Achievement
     public $name = 'Fake Name Custom';
     public $desc = 'This is fake desc';
     public $icon = 'fake-icon.svg';
+    public $level = 'advanced';
     /**
      * @param User $user
      * @return mixed
